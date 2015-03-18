@@ -71,6 +71,7 @@ func createFixedService(t *testing.T) DistroStore {
 	lock.Do(func() {
 		cfg := DefaultContext()
 		cfg.Datacenter = "dc1"
+		cfg.LogLevel = "DEBUG"
 		cfg.NodeName = "test1"
 		cfg.Bootstrap = true
 		cfg.BindAddress = "127.0.0.1"
