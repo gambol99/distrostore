@@ -15,6 +15,7 @@ build:
 	go build
 
 test: build
+	go get github.com/stretchr/testify
 	go test -v
 
 .PHONY: build release changelog
