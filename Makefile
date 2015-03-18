@@ -14,7 +14,7 @@ build:
 	go get
 	go build
 
-test:
+test: build
 	go test -v
 
 .PHONY: build release changelog

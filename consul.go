@@ -133,8 +133,10 @@ func (r *ConsulDistroStore) createConsulClient(cfg *Context) (*api.Client, error
 	return cli, nil
 }
 
+// Add in new member to the cluster
+//  member: 	the endpoint address i.e. the <IPADDRESS>:<PORT>
 func (r *ConsulDistroStore) Join(member string) error {
-	if !IsEndpoint(member) {
+	if !isEndpoint(member) {
 		return ErrInvalidMemberAddress
 	}
 	_, err := r.agent.JoinLAN([]string{member})

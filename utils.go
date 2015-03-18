@@ -22,7 +22,7 @@ var (
 	endpointRegex = regexp.MustCompile("^(([0-9]{1,3}\\.){3}[0-9]{1,3}:[0-9]{1,5})$")
 )
 
-func TemporaryDirectory() (string, error) {
+func temporyDirectory() (string, error) {
 	if dir, err := ioutil.TempDir("", "consul"); err != nil {
 		return "", err
 	} else {
@@ -30,6 +30,6 @@ func TemporaryDirectory() (string, error) {
 	}
 }
 
-func IsEndpoint(str string) bool {
+func isEndpoint(str string) bool {
 	return endpointRegex.MatchString(str)
 }

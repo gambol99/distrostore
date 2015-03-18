@@ -15,10 +15,11 @@ package distrostore
 
 import (
 	"testing"
+
 	"github.com/stretchr/testify/assert"
 )
 
 func TestIsEndpoint(t *testing.T) {
-	assert.Equal(t, false, IsEndpoint("172.0.0.11:2222222"), "the method should have been false" )
-	assert.Equal(t, true, IsEndpoint("172.0.0.11:222"), "the method should have been true" )
+	assert.Equal(t, false, isEndpoint("172.0.0.11:2222222"), "the method should have been false")
+	assert.Equal(t, true, isEndpoint("172.0.0.11:222"), "the method should have been true")
 }
