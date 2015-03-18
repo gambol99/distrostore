@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gambol99/distrostore.svg?branch=master)](https://travis-ci.org/gambol99/distrostore)
+
 Distro Store
 ----------
 
