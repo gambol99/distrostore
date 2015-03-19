@@ -18,6 +18,7 @@ import (
 	"io/ioutil"
 
 	"github.com/hashicorp/consul/consul"
+	"fmt"
 )
 
 type PortConfig struct {
@@ -38,6 +39,18 @@ func (p *PortConfig) ApplyIndex(index int) {
 	p.SerfLan += index
 	p.SerfWan += index
 	p.Server += index
+}
+
+func (p PortConfig) String() string {
+	ports := `
+	DNS: %d
+	HTTP: %d
+	HTTPS: %d
+	RPC: %d
+	SerfLan: %d
+	SerfWan: %d
+	`
+	return fmt.Sprintf(ports, p.DNS, p.HTTP, p.HTTPS, p.RPC, p.SerfLan, p.SerfWan)
 }
 
 // the context is a stripped down version of configuration for the Consul

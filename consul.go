@@ -22,7 +22,6 @@ import (
 
 	"github.com/hashicorp/consul/api"
 	"github.com/hashicorp/consul/command/agent"
-
 )
 
 const (
@@ -110,7 +109,6 @@ func (r *ConsulDistroStore) createConsulAgent(cfg *Context) (*agent.Agent, error
 		}
 	}
 
-	service.StartSync()
 	return service, nil
 }
 
