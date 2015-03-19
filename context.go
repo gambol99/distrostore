@@ -13,7 +13,12 @@ limitations under the License.
 
 package distrostore
 
-import "github.com/hashicorp/consul/consul"
+import (
+	"io"
+	"io/ioutil"
+
+	"github.com/hashicorp/consul/consul"
+)
 
 type PortConfig struct {
 	DNS     int // DNS Query interface
@@ -50,7 +55,7 @@ type Context struct {
 	// enable debug
 	EnableDebug bool
 	// the loglevel
-	LogLevel string
+	LogOutput io.Writer
 	// the key used to encrypt the traffic
 	EncryptKey string
 	// the datacenter
@@ -73,7 +78,7 @@ func DefaultContext() *Context {
 		EnableDNS:     false,
 		Members:       make([]string, 0),
 		EnableDebug:   false,
-		LogLevel:      "NONE",
+		LogOutput:     ioutil.Discard,
 		Datacenter:    "dc1",
 		ClientAddress: "0.0.0.0",
 		BindAddress:   "0.0.0.0",

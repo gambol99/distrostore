@@ -16,7 +16,7 @@ package distrostore
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
+	"os"
 	"sync"
 	"testing"
 	"time"
@@ -43,6 +43,7 @@ func createTestServerBootstrap(t *testing.T) DistroStore {
 	config.Bootstrap = true
 	config.BindAddress = "127.0.0.1"
 	config.DataDir = tmpDir(t)
+	config.LogOutput = os.Stdout
 	config.PortsConfig.ApplyIndex(current_index)
 	return createServer(config, t)
 }
@@ -52,13 +53,13 @@ func createTestServerMembers(t *testing.T, members []string) DistroStore {
 	config.BindAddress = "127.0.0.1"
 	config.Members = members
 	config.DataDir = tmpDir(t)
+	config.LogOutput = os.Stdout
 	config.PortsConfig.ApplyIndex(current_index)
 	return createServer(config, t)
 }
 
 func createServer(config *Context, t *testing.T) DistroStore {
 	if server, err := New(config); err != nil {
-		log.SetOutput(ioutil.Discard)
 		t.Fatalf("Unable to create the fake consul cluster, error: %s", err)
 	} else {
 		time.Sleep(time.Duration(3) * time.Second)
@@ -71,7 +72,7 @@ func createFixedService(t *testing.T) DistroStore {
 	lock.Do(func() {
 		cfg := DefaultContext()
 		cfg.Datacenter = "dc1"
-		cfg.LogLevel = "DEBUG"
+		cfg.LogOutput = os.Stdout
 		cfg.NodeName = "test1"
 		cfg.Bootstrap = true
 		cfg.BindAddress = "127.0.0.1"

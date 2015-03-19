@@ -16,9 +16,7 @@ package distrostore
 import (
 	"fmt"
 	"io/ioutil"
-	"io"
 	"net"
-	"os"
 	"sync"
 	"time"
 
@@ -80,11 +78,9 @@ func (r *ConsulDistroStore) Config() *Context {
 func (r *ConsulDistroStore) createConsulAgent(cfg *Context) (*agent.Agent, error) {
 	var err error
 	var scadaList net.Listener
-	var output io.Writer
-	// step: set the logging
-	output = os.Stderr
-	if cfg.LogLevel == "NONE" {
-		output = ioutil.Discard
+
+	if cfg.LogOutput == nil {
+		cfg.LogOutput = ioutil.Discard
 	}
 
 	// step: parse the context and fill in a config
@@ -92,7 +88,7 @@ func (r *ConsulDistroStore) createConsulAgent(cfg *Context) (*agent.Agent, error
 		return nil, nil
 	}
 	// step: create the actual agent
-	service, err := agent.Create(r.config, output)
+	service, err := agent.Create(r.config, cfg.LogOutput)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +104,7 @@ func (r *ConsulDistroStore) createConsulAgent(cfg *Context) (*agent.Agent, error
 	// step: wait for the service to be available
 
 	if cfg.EnableHTTP {
-		r.http_api, err = agent.NewHTTPServers(service, r.config, scadaList, output)
+		r.http_api, err = agent.NewHTTPServers(service, r.config, scadaList, cfg.LogOutput)
 		if err != nil {
 			return nil, err
 		}
